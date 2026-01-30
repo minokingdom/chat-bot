@@ -31,7 +31,7 @@ export async function getChatResponse(userMessage: string, history: ChatMessage[
   try {
     const client = getAIClient();
     const model = client.getGenerativeModel({
-      model: "gemini-1.5-flash-001",
+      model: "gemini-pro",
       systemInstruction: SYSTEM_INSTRUCTION,
       // Note: tools config for Google Search might require specific setup in this SDK version or handle differently.
       // Trying standard simplified tools config.
@@ -72,7 +72,21 @@ export async function getChatResponse(userMessage: string, history: ChatMessage[
     return { text, links: uniqueLinks };
   } catch (error) {
     console.error("Gemini API Error:", error);
-    const errorMessage = error instanceof Error ? error.message : String(error);
+    let errorMessage = error instanceof Error ? error.message : String(error);
+
+    if (errorMessage.includes("404") || errorMessage.includes("not found")) {
+      try {
+        const client = getAIClient();
+        // Note: listModels might not be directly exposed on the instance in this SDK version
+        // or requires a specific call. Accessing via the underlying API or skipping if complex.
+        // Actually, strictly speaking verify the SDK capability for listModels.
+        // It's often on the GoogleGenerativeAI instance or not straightforward in the browser due to proxy/CORS mostly? 
+        // No, it's usually valid. Let's try to just suggest gemini-pro if flash fails.
+        errorMessage += "\n\n(모델을 찾을 수 없습니다. API 키가 올바른지, 혹은 해당 모델 사용 권한이 있는지 확인해주세요.)";
+      } catch (e) {
+        // ignore
+      }
+    }
     throw new Error(`오류: ${errorMessage}`);
   }
 }

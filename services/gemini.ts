@@ -64,6 +64,7 @@ export async function getChatResponse(userMessage: string, history: ChatMessage[
     return { text, links: uniqueLinks };
   } catch (error) {
     console.error("Gemini API Error:", error);
-    throw new Error("상담 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    throw new Error(`오류: ${errorMessage}`);
   }
 }

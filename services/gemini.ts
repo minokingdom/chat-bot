@@ -1,6 +1,6 @@
 import { ChatMessage, GroundingLink } from "../types";
 
-const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY || process.env.API_KEY || process.env.OPENROUTER_API_KEY;
+const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 
 const SYSTEM_INSTRUCTION = `
 당신은 '2025년 소상공인 스마트상점 기술보급사업 - 배리어프리 키오스크 지원'의 전담 상담 AI입니다.
@@ -15,11 +15,14 @@ https://www.sbiz.or.kr/smst/fileManager/viewer/1741309670019/index.jsp
 `;
 
 export async function getChatResponse(userMessage: string, history: ChatMessage[]): Promise<{ text: string, links: GroundingLink[] }> {
-  // Debug: Check which key is being loaded (print only first 10 chars for safety)
-  console.log("Loaded API Key prefix:", OPENROUTER_API_KEY ? OPENROUTER_API_KEY.substring(0, 10) + "..." : "None");
+  // Debug logic
+  const keyStatus = OPENROUTER_API_KEY
+    ? `Length: ${OPENROUTER_API_KEY.length}, Prefix: ${OPENROUTER_API_KEY.substring(0, 10)}...`
+    : "Only undefined/null";
+  console.log("VITE_OPENROUTER_API_KEY Check:", keyStatus);
 
   if (!OPENROUTER_API_KEY) {
-    throw new Error("API Key가 설정되지 않았습니다. Vercel 환경변수(VITE_OPENROUTER_API_KEY)를 확인해주세요.");
+    throw new Error("API Key가 설정되지 않았습니다. Vercel 환경변수 VITE_OPENROUTER_API_KEY를 확인해주세요.");
   }
 
   // OpenRouter expects OpenAI-compatible messages

@@ -2,7 +2,19 @@
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { ChatMessage, GroundingLink } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+let ai: GoogleGenAI | null = null;
+
+const getAIClient = () => {
+  if (!ai) {
+    const apiKey = process.env.API_KEY || (import.meta as any).env?.VITE_GEMINI_API_KEY;
+    if (!apiKey) {
+      console.error("API Key is missing!");
+      // Don't throw here to avoid crashing module load, but subsequent calls will fail.
+    }
+    ai = new GoogleGenAI({ apiKey: apiKey || '' });
+  }
+  return ai;
+};
 
 const SYSTEM_INSTRUCTION = `
 당신은 '2025년 소상공인 스마트상점 기술보급사업 - 배리어프리 키오스크 지원'의 전담 상담 AI입니다.
@@ -19,6 +31,7 @@ https://www.sbiz.or.kr/smst/fileManager/viewer/1741309670019/index.jsp
 
 export async function getChatResponse(userMessage: string, history: ChatMessage[]): Promise<{ text: string, links: GroundingLink[] }> {
   try {
+    const ai = getAIClient();
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: [
@@ -31,10 +44,10 @@ export async function getChatResponse(userMessage: string, history: ChatMessage[
     });
 
     const text = response.text || "죄송합니다. 답변을 생성하는 중에 문제가 발생했습니다.";
-    
+
     const links: GroundingLink[] = [];
     const groundingChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
-    
+
     if (groundingChunks) {
       groundingChunks.forEach((chunk: any) => {
         if (chunk.web && chunk.web.uri) {

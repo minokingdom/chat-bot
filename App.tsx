@@ -132,7 +132,7 @@ const App: React.FC = () => {
               <div className="p-2 bg-[#34C759] rounded-xl text-white">
                 <HelpCircle size={18} />
               </div>
-              <span>추진 절차 안내</span>
+              <span>사업신청 메뉴얼</span>
             </div>
             <ChevronRight size={16} className="text-slate-300" />
           </button>

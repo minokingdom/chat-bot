@@ -8,6 +8,57 @@ interface Props {
 }
 
 const ProcessModal: React.FC<Props> = ({ isOpen, onClose }) => {
+  const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
+
+  const steps = [
+    {
+      icon: <ClipboardCheck className="text-blue-600" size={24} />,
+      title: "사업 신청",
+      desc: "소상공인마당 홈페이지 온라인 접수",
+      color: "bg-blue-50"
+    },
+    {
+      icon: <Search className="text-blue-600" size={24} />,
+      title: "서류 검토 및 실사",
+      desc: "신청 자격 확인 및 현장 환경 점검",
+      color: "bg-blue-50"
+    },
+    {
+      icon: <Star className="text-blue-600" size={24} />,
+      title: "대상자 선정",
+      desc: "심사위원회 평가를 통한 최종 선정",
+      color: "bg-blue-50"
+    },
+    {
+      icon: <FileText className="text-blue-600" size={24} />,
+      title: "협약 및 자부담",
+      desc: "사업 협약 체결 및 자부담금 입금",
+      color: "bg-blue-100"
+    },
+    {
+      icon: <Monitor className="text-blue-600" size={24} />,
+      title: "설치 및 검수",
+      desc: "배리어프리 키오스크 설치 및 작동 확인",
+      color: "bg-blue-100"
+    },
+    {
+      icon: <CheckCircle2 className="text-blue-600" size={24} />,
+      title: "지원금 지급",
+      desc: "최종 정산 및 지원금 지급 완료",
+      color: "bg-blue-600",
+      dark: true
+    }
+  ];
+
+  // 이미지 파일을 동적으로 불러오기 (viter import.meta.glob 사용)
+  // 대소문자 확장자 모두 지원하도록 패턴 수정 (.PNG 등)
+  const images = import.meta.glob('../src/assets/manual/*.{png,jpg,jpeg,webp,PNG,JPG,JPEG,WEBP}', { eager: true, import: 'default' });
+
+  // 파일명 기준으로 정렬 (숫자 순서 보장 등)
+  const sortedImageUrls = Object.keys(images)
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }))
+    .map(key => images[key] as string);
+
   // Zoom state for lightbox
   const [isZoomed, setIsZoomed] = React.useState(false);
 

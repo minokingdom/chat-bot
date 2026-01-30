@@ -15,8 +15,8 @@ export default defineConfig(({ mode }) => {
       VitePWA({
         registerType: 'autoUpdate',
         manifest: {
-          name: '소상공인 키오스크 AI 비서',
-          short_name: '키오스크 비서',
+          name: 'AI 비서',
+          short_name: 'AI 비서',
           description: '배리어프리 키오스크 지원사업 AI 상담 챗봇',
           theme_color: '#ffffff',
           background_color: '#F2F2F7',

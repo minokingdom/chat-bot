@@ -39,7 +39,7 @@ export async function getChatResponse(userMessage: string, history: ChatMessage[
         "X-Title": "Barrier Free Kiosk Bot"
       },
       body: JSON.stringify({
-        model: "google/gemini-3.0-flash-preview", // User specified AI Studio model
+        model: "google/gemini-3-flash-preview", // User confirmed OpenRouter model
         messages: messages,
         temperature: 0.7,
         max_tokens: 1000

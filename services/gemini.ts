@@ -33,7 +33,7 @@ export async function getChatResponse(userMessage: string, history: ChatMessage[
   try {
     const ai = getAIClient();
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.0-flash',
       contents: [
         { role: 'user', parts: [{ text: userMessage }] }
       ],

@@ -31,7 +31,7 @@ export async function getChatResponse(userMessage: string, history: ChatMessage[
   try {
     const client = getAIClient();
     const model = client.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-1.5-flash-001",
       systemInstruction: SYSTEM_INSTRUCTION,
       // Note: tools config for Google Search might require specific setup in this SDK version or handle differently.
       // Trying standard simplified tools config.

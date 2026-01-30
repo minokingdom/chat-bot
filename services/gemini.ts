@@ -15,12 +15,6 @@ https://www.sbiz.or.kr/smst/fileManager/viewer/1741309670019/index.jsp
 `;
 
 export async function getChatResponse(userMessage: string, history: ChatMessage[]): Promise<{ text: string, links: GroundingLink[] }> {
-  // Debug logic
-  const keyStatus = OPENROUTER_API_KEY
-    ? `Length: ${OPENROUTER_API_KEY.length}, Prefix: ${OPENROUTER_API_KEY.substring(0, 10)}...`
-    : "Only undefined/null";
-  console.log("VITE_OPENROUTER_API_KEY Check:", keyStatus);
-
   if (!OPENROUTER_API_KEY) {
     throw new Error("API Key가 설정되지 않았습니다. Vercel 환경변수 VITE_OPENROUTER_API_KEY를 확인해주세요.");
   }

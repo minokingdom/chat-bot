@@ -90,13 +90,13 @@ const App: React.FC = () => {
               <Sparkles size={40} />
             </div>
             <h1 className="text-3xl md:text-4xl font-black text-[#1C1C1E] mb-5 tracking-tight break-keep leading-tight">
-              2025 스마트상점 <br/> 배리어프리 키오스크
+              2025 스마트상점 <br /> 배리어프리 키오스크
             </h1>
             <p className="text-[17px] text-slate-500 mb-12 leading-relaxed break-keep font-medium">
-              매뉴얼을 학습한 AI가 <br/> 지원사업의 모든 것을 실시간 안내합니다.
+              매뉴얼을 학습한 AI가 <br /> 지원사업의 모든 것을 실시간 안내합니다.
             </p>
             {/* 버튼 사이즈 복구: px-10 py-4, max-w-xs */}
-            <button 
+            <button
               onClick={() => setShowCover(false)}
               className="w-full max-w-xs px-10 py-4 bg-[#007AFF] text-white rounded-[18px] font-bold text-[17px] hover:bg-[#0062CC] transition-all shadow-xl shadow-blue-100 active:scale-95 flex items-center justify-center mx-auto"
             >
@@ -155,7 +155,7 @@ const App: React.FC = () => {
               <h2 className="text-[18px] font-extrabold text-[#1C1C1E] tracking-tight">키오스크 지원 상담</h2>
             </div>
           </div>
-          <button 
+          <button
             onClick={() => setShowProcessModal(true)}
             className="w-10 h-10 flex items-center justify-center text-[#007AFF] bg-[#007AFF]/5 rounded-full active:scale-90 transition-all shadow-sm"
           >
@@ -164,7 +164,7 @@ const App: React.FC = () => {
         </header>
 
         {/* 메시지 리스트 */}
-        <div 
+        <div
           ref={scrollRef}
           className="flex-1 overflow-y-auto px-4 md:px-8 py-5 custom-scrollbar scroll-smooth bg-transparent"
         >
@@ -172,17 +172,17 @@ const App: React.FC = () => {
             <div className="text-center mb-6 opacity-30">
               <span className="text-[10px] font-black bg-slate-200 px-3 py-1 rounded-full uppercase tracking-widest">Today</span>
             </div>
-            
+
             <div className="space-y-1">
               {state.messages.map((msg) => (
                 <ChatMessage key={msg.id} message={msg} />
               ))}
-              
+
               {state.isLoading && (
                 <div className="flex items-start mb-6 animate-ios">
                   <div className="flex-shrink-0 flex items-end mb-1 mr-2">
                     <div className="w-8 h-8 bg-[#E9E9EB] rounded-full flex items-center justify-center text-slate-400">
-                       <Sparkles size={16} />
+                      <Sparkles size={16} />
                     </div>
                   </div>
                   <div className="bg-[#E9E9EB] px-4 py-2.5 rounded-[20px] rounded-bl-[4px]">
@@ -208,9 +208,9 @@ const App: React.FC = () => {
 
         {/* 하단 입력바 */}
         <div className="bg-gradient-to-t from-[#F2F2F7] via-[#F2F2F7]/95 to-transparent pt-3 pb-safe">
-           <ChatInput 
-            onSendMessage={handleSendMessage} 
-            disabled={state.isLoading} 
+          <ChatInput
+            onSendMessage={handleSendMessage}
+            disabled={state.isLoading}
             showSuggestions={showSuggestions}
             onToggleSuggestions={() => setShowSuggestions(!showSuggestions)}
           />

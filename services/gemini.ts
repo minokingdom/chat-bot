@@ -41,8 +41,8 @@ export async function getChatResponse(userMessage: string, history: ChatMessage[
       headers: {
         "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
         "Content-Type": "application/json",
-        "HTTP-Referer": "https://barrier-free-kiosk.vercel.app/",
-        "X-Title": "Barrier Free Kiosk Bot"
+        "HTTP-Referer": typeof window !== 'undefined' ? window.location.origin : "https://barrier-free-kiosk.vercel.app/",
+        "X-Title": "Barrier Free Kiosk"
       },
       body: JSON.stringify({
         model: "google/gemini-3-flash-preview", // User confirmed OpenRouter model

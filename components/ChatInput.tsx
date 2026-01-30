@@ -1,6 +1,5 @@
-
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Hash, ChevronUp, ChevronDown } from 'lucide-react';
+import { Send, ChevronUp, ChevronDown } from 'lucide-react';
 
 interface Props {
   onSendMessage: (content: string) => void;
@@ -32,7 +31,7 @@ const ChatInput: React.FC<Props> = ({ onSendMessage, disabled, showSuggestions, 
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       const scrollHeight = textareaRef.current.scrollHeight;
-      textareaRef.current.style.height = `${Math.min(scrollHeight, 120)}px`;
+      textareaRef.current.style.height = `${Math.min(scrollHeight, 140)}px`;
     }
   }, [input]);
 
@@ -45,12 +44,11 @@ const ChatInput: React.FC<Props> = ({ onSendMessage, disabled, showSuggestions, 
   ];
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-4 pb-2 md:pb-4 relative">
-      {/* 추천 질문 컨트롤 */}
+    <div className="w-full max-w-4xl mx-auto px-4 pb-4 relative">
       <div className="flex justify-center mb-3">
         <button 
           onClick={onToggleSuggestions}
-          className="flex items-center space-x-1 px-4 py-1.5 rounded-full bg-white/80 border border-slate-100 text-slate-500 hover:bg-slate-50 transition-all text-[11px] font-bold shadow-sm ios-blur"
+          className="flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-white/50 border border-black/5 text-slate-500 hover:bg-white/80 transition-all text-[11px] font-bold shadow-sm ios-blur"
         >
           {showSuggestions ? (
             <><span>질문 숨기기</span><ChevronDown size={14} /></>
@@ -60,14 +58,13 @@ const ChatInput: React.FC<Props> = ({ onSendMessage, disabled, showSuggestions, 
         </button>
       </div>
 
-      {/* 추천 질문 그리드 - 깔끔한 카드 스타일 */}
-      <div className={`overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${showSuggestions ? 'max-h-[300px] opacity-100 mb-4' : 'max-h-0 opacity-0 mb-0'}`}>
+      <div className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${showSuggestions ? 'max-h-[300px] opacity-100 mb-4' : 'max-h-0 opacity-0 mb-0'}`}>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2 px-1">
           {suggestions.map((s, i) => (
             <button
               key={i}
               onClick={() => onSendMessage(s)}
-              className="w-full text-[12px] px-3 py-3 rounded-2xl bg-white border border-slate-200 text-slate-600 hover:border-blue-400 hover:text-blue-600 transition-all flex items-center justify-center shadow-sm font-semibold active:scale-[0.97] text-center"
+              className="w-full text-[13px] px-3 py-3.5 rounded-[18px] bg-white border border-slate-100 text-[#1C1C1E] hover:border-[#007AFF] hover:text-[#007AFF] transition-all flex items-center justify-center shadow-sm font-semibold active:scale-[0.96] text-center break-keep"
             >
               {s}
             </button>
@@ -75,8 +72,7 @@ const ChatInput: React.FC<Props> = ({ onSendMessage, disabled, showSuggestions, 
         </div>
       </div>
       
-      {/* iOS iMessage 스타일 입력바 */}
-      <div className="relative flex items-end w-full bg-[#F2F2F7] rounded-[26px] p-1.5 border border-slate-200 focus-within:bg-white transition-all">
+      <div className="relative flex items-end w-full bg-[#E9E9EB]/60 backdrop-blur rounded-[28px] p-1.5 border border-black/5 focus-within:bg-white focus-within:border-slate-300 transition-all group">
         <textarea
           ref={textareaRef}
           rows={1}
@@ -85,25 +81,25 @@ const ChatInput: React.FC<Props> = ({ onSendMessage, disabled, showSuggestions, 
           onKeyDown={handleKeyDown}
           placeholder="질문을 입력하세요"
           disabled={disabled}
-          className="w-full pl-4 pr-12 py-2.5 resize-none bg-transparent outline-none text-slate-800 text-[16px] max-h-[140px] leading-snug placeholder:text-slate-400 font-medium"
+          className="w-full pl-4 pr-12 py-2.5 resize-none bg-transparent outline-none text-[#1C1C1E] text-[17px] max-h-[140px] leading-tight placeholder:text-slate-400 font-medium"
         />
         <button
           type="submit"
           onClick={handleSubmit}
           disabled={!input.trim() || disabled}
-          className={`mb-0.5 mr-0.5 p-2 rounded-full transition-all ${
+          className={`mb-0.5 mr-0.5 p-2 rounded-full transition-all active:scale-90 ${
             input.trim() && !disabled
-              ? 'bg-[#007AFF] text-white shadow-sm'
+              ? 'bg-[#007AFF] text-white shadow-md'
               : 'bg-slate-300 text-white cursor-not-allowed opacity-40'
           }`}
         >
-          <Send size={18} fill="currentColor" className="rotate-0" />
+          <Send size={20} fill="currentColor" />
         </button>
       </div>
       
-      <div className="text-center mt-3">
-        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest opacity-70">
-          Official Support Assistant
+      <div className="text-center mt-3 mb-2">
+        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] opacity-50">
+          Official AI Support Agent
         </p>
       </div>
     </div>

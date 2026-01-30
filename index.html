@@ -2,9 +2,9 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>배리어프리 키오스크 지원 AI 비서</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -13,9 +13,14 @@
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             color: #1C1C1E;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
         }
+
         .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
+            width: 5px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
             background: transparent;
@@ -24,32 +29,35 @@
             background: rgba(0,0,0,0.1);
             border-radius: 10px;
         }
-        
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        
-        .break-keep {
-            word-break: keep-all;
-            overflow-wrap: break-word;
-        }
 
         .ios-blur {
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            background-color: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            background-color: rgba(255, 255, 255, 0.7);
         }
 
-        @keyframes iosFadeIn {
-            from { opacity: 0; transform: scale(0.98) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+        /* Markdown spacing within messages */
+        .prose-ios p {
+            margin-top: 0.8rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
         }
-        .animate-ios-in {
-            animation: iosFadeIn 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        .prose-ios p:first-child { margin-top: 0; }
+        .prose-ios p:last-child { margin-bottom: 0; }
+        .prose-ios strong { color: inherit; font-weight: 700; }
+        .prose-ios ul, .prose-ios ol { margin: 0.6rem 0; padding-left: 1.25rem; }
+        .prose-ios li { margin: 0.3rem 0; }
+
+        @keyframes iosSpring {
+            0% { transform: scale(0.95) translateY(20px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .animate-ios {
+            animation: iosSpring 0.4s cubic-bezier(0.17, 0.89, 0.32, 1.1) forwards;
+        }
+
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom);
         }
     </style>
 <script type="importmap">

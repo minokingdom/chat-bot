@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>배리어프리 키오스크 지원 AI 비서</title>
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -22,11 +24,13 @@
         .custom-scrollbar::-webkit-scrollbar {
             width: 5px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-track {
             background: transparent;
         }
+
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(0,0,0,0.1);
+            background: rgba(0, 0, 0, 0.1);
             border-radius: 10px;
         }
 
@@ -42,16 +46,42 @@
             margin-bottom: 0.8rem;
             line-height: 1.6;
         }
-        .prose-ios p:first-child { margin-top: 0; }
-        .prose-ios p:last-child { margin-bottom: 0; }
-        .prose-ios strong { color: inherit; font-weight: 700; }
-        .prose-ios ul, .prose-ios ol { margin: 0.6rem 0; padding-left: 1.25rem; }
-        .prose-ios li { margin: 0.3rem 0; }
+
+        .prose-ios p:first-child {
+            margin-top: 0;
+        }
+
+        .prose-ios p:last-child {
+            margin-bottom: 0;
+        }
+
+        .prose-ios strong {
+            color: inherit;
+            font-weight: 700;
+        }
+
+        .prose-ios ul,
+        .prose-ios ol {
+            margin: 0.6rem 0;
+            padding-left: 1.25rem;
+        }
+
+        .prose-ios li {
+            margin: 0.3rem 0;
+        }
 
         @keyframes iosSpring {
-            0% { transform: scale(0.95) translateY(20px); opacity: 0; }
-            100% { transform: scale(1) translateY(0); opacity: 1; }
+            0% {
+                transform: scale(0.95) translateY(20px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
         }
+
         .animate-ios {
             animation: iosSpring 0.4s cubic-bezier(0.17, 0.89, 0.32, 1.1) forwards;
         }
@@ -60,7 +90,7 @@
             padding-bottom: env(safe-area-inset-bottom);
         }
     </style>
-<script type="importmap">
+    <script type="importmap">
 {
   "imports": {
     "react/": "https://esm.sh/react@^19.2.4/",
@@ -73,8 +103,34 @@
 }
 </script>
 </head>
+
 <body>
+    <div id="debug-error-display"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:white; color:red; z-index:9999; padding:20px; text-align:left; white-space:pre-wrap; overflow:auto;">
+        <h3>Application Error</h3>
+        <div id="error-content"></div>
+    </div>
+    <script>
+        window.onerror = function (msg, url, line, col, error) {
+            var display = document.getElementById('debug-error-display');
+            var content = document.getElementById('error-content');
+            if (display && content) {
+                display.style.display = 'block';
+                content.innerText += "Error: " + msg + "\nAt: " + url + ":" + line + ":" + col + "\nStack: " + (error ? error.stack : 'N/A') + "\n\n";
+            }
+            return false;
+        };
+        window.addEventListener('unhandledrejection', function (event) {
+            var display = document.getElementById('debug-error-display');
+            var content = document.getElementById('error-content');
+            if (display && content) {
+                display.style.display = 'block';
+                content.innerText += "Unhandled Rejection: " + event.reason + "\n\n";
+            }
+        });
+    </script>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
 </body>
+
 </html>

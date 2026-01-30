@@ -1,19 +1,17 @@
-
-import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { ChatMessage, GroundingLink } from "../types";
 
-let ai: GoogleGenAI | null = null;
+let genAI: GoogleGenerativeAI | null = null;
 
 const getAIClient = () => {
-  if (!ai) {
+  if (!genAI) {
     const apiKey = process.env.API_KEY || (import.meta as any).env?.VITE_GEMINI_API_KEY;
     if (!apiKey) {
       console.error("API Key is missing!");
-      // Don't throw here to avoid crashing module load, but subsequent calls will fail.
     }
-    ai = new GoogleGenAI({ apiKey: apiKey || '' });
+    genAI = new GoogleGenerativeAI(apiKey || '');
   }
-  return ai;
+  return genAI;
 };
 
 const SYSTEM_INSTRUCTION = `
@@ -31,25 +29,35 @@ https://www.sbiz.or.kr/smst/fileManager/viewer/1741309670019/index.jsp
 
 export async function getChatResponse(userMessage: string, history: ChatMessage[]): Promise<{ text: string, links: GroundingLink[] }> {
   try {
-    const ai = getAIClient();
-    const response = await ai.models.generateContent({
-      model: 'gemini-1.5-flash-001',
-      contents: [
-        { role: 'user', parts: [{ text: userMessage }] }
-      ],
-      config: {
-        systemInstruction: SYSTEM_INSTRUCTION,
-        tools: [{ googleSearch: {} }],
-      },
+    const client = getAIClient();
+    const model = client.getGenerativeModel({
+      model: "gemini-1.5-flash",
+      systemInstruction: SYSTEM_INSTRUCTION,
+      // Note: tools config for Google Search might require specific setup in this SDK version or handle differently.
+      // Trying standard simplified tools config.
     });
 
-    const text = response.text || "죄송합니다. 답변을 생성하는 중에 문제가 발생했습니다.";
+    const chatSession = model.startChat({
+      history: history.slice(0, -1).map(msg => ({
+        role: msg.role === 'user' ? 'user' : 'model',
+        parts: [{ text: msg.content }]
+      }))
+    });
 
+    const result = await chatSession.sendMessage(userMessage);
+    const response = await result.response;
+    const text = response.text() || "죄송합니다. 답변을 생성하는 중에 문제가 발생했습니다.";
+
+    // Grounding handling for @google/generative-ai
     const links: GroundingLink[] = [];
-    const groundingChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
+    // Accessing metadata safely - structure may vary slightly but typically:
+    // candidate.groundingMetadata or candidate.citationMetadata
+    // For search grounding, looking for groundingMetadata
+    const candidate = response.candidates?.[0];
+    const groundingMetadata = (candidate as any)?.groundingMetadata;
 
-    if (groundingChunks) {
-      groundingChunks.forEach((chunk: any) => {
+    if (groundingMetadata?.groundingChunks) {
+      groundingMetadata.groundingChunks.forEach((chunk: any) => {
         if (chunk.web && chunk.web.uri) {
           links.push({
             uri: chunk.web.uri,

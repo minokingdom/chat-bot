@@ -200,7 +200,7 @@ const ProcessModal: React.FC<Props> = ({ isOpen, onClose }) => {
             <img
               src={selectedImage}
               alt="Zoomed manual"
-              className={`transition-all duration-200 ease-out shadow-2xl rounded-sm bg-white ${isZoomed ? 'min-w-full max-w-none cursor-zoom-out' : 'max-w-full max-h-[85vh] object-contain cursor-zoom-in'}`}
+              className={`transition-all duration-200 ease-out shadow-2xl rounded-sm bg-white ${isZoomed ? 'min-w-[180%] md:min-w-full max-w-none cursor-zoom-out' : 'max-w-full max-h-[85vh] object-contain cursor-zoom-in'}`}
               onClick={(e) => {
                 e.stopPropagation();
                 setIsZoomed(!isZoomed);

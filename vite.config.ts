@@ -18,8 +18,8 @@ export default defineConfig(({ mode }) => {
           name: 'Kiosk Manager',
           short_name: 'Kiosk Manager',
           description: '배리어프리 키오스크 지원사업 AI 상담 챗봇',
-          theme_color: '#ffffff',
-          background_color: '#F2F2F7',
+          theme_color: '#000000',
+          background_color: '#000000',
           display: 'standalone',
           scope: '/',
           start_url: '/',
@@ -28,12 +28,14 @@ export default defineConfig(({ mode }) => {
             {
               src: 'pwa-192x192.png',
               sizes: '192x192',
-              type: 'image/png'
+              type: 'image/png',
+              purpose: 'any maskable'
             },
             {
               src: 'pwa-512x512.png',
               sizes: '512x512',
-              type: 'image/png'
+              type: 'image/png',
+              purpose: 'any maskable'
             }
           ]
         }

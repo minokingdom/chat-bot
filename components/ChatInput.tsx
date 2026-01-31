@@ -46,7 +46,7 @@ const ChatInput: React.FC<Props> = ({ onSendMessage, disabled, showSuggestions, 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 pb-4 relative">
       <div className="flex justify-center mb-3">
-        <button 
+        <button
           onClick={onToggleSuggestions}
           className="flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-white/50 border border-black/5 text-slate-500 hover:bg-white/80 transition-all text-[11px] font-bold shadow-sm ios-blur"
         >
@@ -71,8 +71,8 @@ const ChatInput: React.FC<Props> = ({ onSendMessage, disabled, showSuggestions, 
           ))}
         </div>
       </div>
-      
-      <div className="relative flex items-end w-full bg-[#E9E9EB]/60 backdrop-blur rounded-[28px] p-1.5 border border-black/5 focus-within:bg-white focus-within:border-slate-300 transition-all group">
+
+      <div className="relative flex items-end w-full bg-white rounded-[28px] p-1.5 border-2 border-[#007AFF] shadow-lg focus-within:shadow-xl focus-within:ring-4 focus-within:ring-[#007AFF]/10 transition-all group">
         <textarea
           ref={textareaRef}
           rows={1}
@@ -87,16 +87,15 @@ const ChatInput: React.FC<Props> = ({ onSendMessage, disabled, showSuggestions, 
           type="submit"
           onClick={handleSubmit}
           disabled={!input.trim() || disabled}
-          className={`mb-0.5 mr-0.5 p-2 rounded-full transition-all active:scale-90 ${
-            input.trim() && !disabled
+          className={`mb-0.5 mr-0.5 p-2 rounded-full transition-all active:scale-90 ${input.trim() && !disabled
               ? 'bg-[#007AFF] text-white shadow-md'
               : 'bg-slate-300 text-white cursor-not-allowed opacity-40'
-          }`}
+            }`}
         >
           <Send size={20} fill="currentColor" />
         </button>
       </div>
-      
+
       <div className="text-center mt-3 mb-2">
         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] opacity-50">
           Official AI Support Agent

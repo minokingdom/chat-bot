@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AI챗봇</string>
+    <string name="title_activity_main">AI챗봇</string>
+    <string name="package_name">com.minokingdom.aichatbot</string>
+    <string name="custom_url_scheme">com.minokingdom.aichatbot</string>
+</resources>

@@ -15,8 +15,8 @@ export default defineConfig(({ mode }) => {
       VitePWA({
         registerType: 'autoUpdate',
         manifest: {
-          name: 'Kiosk Manager',
-          short_name: 'Kiosk Manager',
+          name: '베리어프리 키오스크 지원사업 도우미',
+          short_name: '키오스크 도우미',
           description: '배리어프리 키오스크 지원사업 AI 상담 챗봇',
           theme_color: '#000000',
           background_color: '#000000',
